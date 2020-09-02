@@ -14,7 +14,7 @@ var getUserRepos = function(user) {
             });
         } else {
             alert("Error: " + response.statusText);
-        }
+        };
     });
 };
 
@@ -29,10 +29,16 @@ var formSubmitHandler = function() {
     }
     else {
     alert("Please enter a GitHub username");
-    }
+    };
 };
 
 var displayRepos = function(repos, searchTerm) {
+    // To check if API returned any repos
+    if (repos.length === 0) {
+        repoContainerEl.textContent = "No repositories found.";
+        return;
+    };
+
     // To clear old content
     repoContainerEl.textContent = "";
     repoSearchTerm.textContent = searchTerm;
