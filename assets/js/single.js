@@ -1,4 +1,5 @@
 var issueContainerEl = document.querySelector("#issues-container");
+var limitWarningEl = document.querySelector("#limit-warning");
 
 var getRepoIssues = function(repo) {
     var apiUrl = "https://api.github.com/repos/" + repo + "/issues?direction=asc";
@@ -7,6 +8,11 @@ var getRepoIssues = function(repo) {
         if (response.ok) {
             response.json().then(function(data) {
                 displayIssues(data);
+
+                // To check if API has paginated issues
+                if (response.headers.get("Link")) {
+                    displayWarning(repo);
+                }
             });
         } 
         else {
@@ -56,4 +62,18 @@ var displayIssues = function(issues) {
     };
 };
 
-getRepoIssues("WoodwindCDT/codingQuiz");
+var displayWarning = function(repo) {
+    // To add text to the warning container
+    limitWarningEl.textContent = "This repo has more than 30 Issues!, visit ";
+
+    // To create a link element 
+    var linkEl = document.createElement("a");
+    linkEl.textContent = "See More Issues on GitHub.com";
+    linkEl.setAttribute("href", "https://github.com/" + repo + "/issues");
+    linkEl.setAttribute("target", "_blank");
+
+    // To append to issues container
+    limitWarningEl.appendChild(linkEl);
+};
+
+getRepoIssues("facebook/react");
