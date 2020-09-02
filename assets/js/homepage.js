@@ -68,7 +68,7 @@ var displayRepos = function(repos, searchTerm) {
         statusE1.classList = "flex-row align-center";
 
         // To check if current repo has issues or not
-        if (repos[i].open_issues_counts > 0) {
+        if (repos[i].open_issues_count > 0) {
             statusE1.innerHTML = "<i class='fas fa-times status-icon icon-danger'></i>" + repos[i].open_issues_count + " issue(s)";
         }
         else {
